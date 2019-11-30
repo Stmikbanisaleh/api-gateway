@@ -8,10 +8,14 @@ const logger = require('morgan');
 const Sequelize = require('sequelize');
 
 var usersRouter = require('./routes/users');
+var usersv2Router = require('./routes/usersv2');
+
 var indexRouter = require('./routes/index');
 
 const UserModel = require('./model/muser');
 const revModel = require('./model/msrev');
+const Userv2Model = require('./model/msuserstandar');
+
 
 
 
@@ -28,6 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
+app.use('/usersv2', usersv2Router);
 app.use('/', indexRouter);
 app.use('/public', express.static(__dirname + '/public'));
 
