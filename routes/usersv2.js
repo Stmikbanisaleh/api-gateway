@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const UserSchema = require('../model/msuserstandar');
-const TokenSchemaStd = require('../model/msuserstandar');
+const TokenSchemaStd = require('../model/msusertokenstd');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
