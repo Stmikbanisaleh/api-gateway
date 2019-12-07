@@ -260,7 +260,7 @@ router.post('/getuserbyemail', (req, res) => {
 });
 
 router.post('/inserttoken', (req, res) => {
-    UserSchema.create({
+  TokenSchemaStd.create({
       email: req.body.email,
       token: req.body.token,
       data_created: req.body.token
