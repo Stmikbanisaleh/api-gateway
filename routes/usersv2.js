@@ -137,7 +137,7 @@ router.post('/register', async function (req, res, next) {
               id_kota,
               no_handphone,
               id_provinsi,
-              is_active: 3,
+              is_active: req.body.is_active,
               image,
               stakeholder
             });

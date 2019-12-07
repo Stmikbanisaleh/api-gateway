@@ -124,7 +124,7 @@ router.post('/register', async function (req, res, next) {
               email,
               password: hash,
               role_id: req.body.role_id,
-              is_active: 3,
+              is_active: req.body.is_active,
             });
             if (users) {
               res.status(201).json({
