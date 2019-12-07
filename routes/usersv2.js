@@ -263,7 +263,7 @@ router.post('/inserttoken', (req, res) => {
   TokenSchemaStd.create({
       email: req.body.email,
       token: req.body.token,
-      data_created: req.body.token
+      date_created: req.body.date_created
     })
       .then((data) => {
         if (data.length < 1) {
@@ -324,6 +324,54 @@ router.post('/deletetoken', (req, res) => {
       messages: error,
     });
   }
+});
+
+router.post('/getuserstdbyemail', (req, res) => {
+  TokenSchemaStd.findAll({
+    where: {
+      email: req.body.email,
+    },
+  })
+    .then((data) => {
+      if (data.length < 1) {
+        res.status(404).json({
+          message: 'Not Found',
+        });
+      } else {
+        res.status(200).json(data);
+      }
+      // });x
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+        status: 500,
+      });
+    });
+});
+
+router.post('/getuserstdbytoken', (req, res) => {
+  TokenSchemaStd.findAll({
+    where: {
+      token: req.body.token,
+    },
+  })
+    .then((data) => {
+      if (data.length < 1) {
+        res.status(404).json({
+          message: 'Not Found',
+        });
+      } else {
+        res.status(200).json(data);
+      }
+      // });x
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+        status: 500,
+      });
+    });
 });
 
 module.exports = router;
