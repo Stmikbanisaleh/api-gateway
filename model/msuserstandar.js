@@ -23,7 +23,7 @@ const msuserstandar = sequelize.define('msuserstandar', {
     defaultValue: 0,
   },
   image: {
-    type: Sequelize.BLOB('long'),
+    type: Sequelize.STRING,
     allowNull: true,
   },
   password: {

@@ -109,6 +109,8 @@ router.post('/register', async function (req, res, next) {
         alamat,
         id_provinsi,
         id_kota,
+        image,
+        stakeholder
 
       } = req.body;
 
@@ -136,6 +138,8 @@ router.post('/register', async function (req, res, next) {
               no_handphone,
               id_provinsi,
               is_active: 3,
+              image,
+              stakeholder
             });
             if (users) {
               res.status(201).json({
