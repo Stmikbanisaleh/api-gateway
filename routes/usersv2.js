@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const UserSchema = require('../model/msuserstandar');
+const TokenSchemaStd = require('../model/msusertokenstd');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -232,6 +233,55 @@ router.post('/getuserbyid', (req, res) => {
     rows: 'null'
   });
 }
+});
+
+router.post('/getuserbyemail', (req, res) => {
+    UserSchema.findAll({
+      where: {
+        email: req.body.email,
+      },
+    })
+      .then((data) => {
+        if (data.length < 1) {
+          res.status(404).json({
+            message: 'Not Found',
+          });
+        } else {
+          res.status(200).json(data);
+        }
+        // });x
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+          status: 500,
+        });
+      });
+});
+
+router.post('/inserttoken', (req, res) => {
+    UserSchema.create({
+      email: req.body.email,
+      token: req.body.token,
+      data_created: req.body.token
+    })
+      .then((data) => {
+        if (data.length < 1) {
+          res.status(404).json({
+            message: 'Not Found',
+          });
+        } else {
+          res.status(200).json(data);
+        }
+        // });x
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+          status: 500,
+        });
+      });
+
 });
 
 module.exports = router;
