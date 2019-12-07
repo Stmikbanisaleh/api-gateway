@@ -284,4 +284,46 @@ router.post('/inserttoken', (req, res) => {
 
 });
 
+router.post('/updatepassword', (req, res) => {
+  const payload = {
+    password: req.body.password,
+  };
+
+  try {
+    TokenSchemaStd.update(payload, {
+      where: {
+        email: req.body.email,
+      },
+    })
+      .then(() => res.status(200).json({
+        status: 200,
+        messages: 'Password berhasil diupdate',
+      }));
+  } catch (e) {
+    res.status(400).json({
+      status: 'ERROR',
+      messages: e,
+      data: {},
+    });
+  }
+});
+
+router.post('/deletetoken', (req, res) => {
+  try {
+    TokenSchemaStd.destroy({
+      where: {
+        email: req.body.email
+      }
+    })
+      .then((response) => {
+        res.status(200).json(response);
+      });
+  } catch (error) {
+    res.status(400).json({
+      status: 500,
+      messages: error,
+    });
+  }
+});
+
 module.exports = router;
