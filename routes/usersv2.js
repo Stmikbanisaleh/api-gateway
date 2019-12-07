@@ -197,4 +197,36 @@ router.post('/getuserbyemail', (req, res) => {
   });
 }
 });
+
+router.post('/getuserbyid', (req, res) => {
+  if(req.body.id){
+    UserSchema.findAll({
+      where: {
+        id: req.body.id,
+      },
+    })
+      .then((data) => {
+        if (data.length < 1) {
+          res.status(404).json({
+            message: 'Not Found',
+          });
+        } else {
+          res.status(200).json(data);
+        }
+        // });x
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+          status: 500,
+        });
+      });
+}else{
+  res.status(500).json({
+    status: 500,
+    message: 'id is empty',
+    rows: 'null'
+  });
+}
+});
 module.exports = router;
