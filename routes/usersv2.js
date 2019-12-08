@@ -235,7 +235,7 @@ router.post('/getuserbyid', (req, res) => {
 }
 });
 
-router.post('/getuserbyemail', (req, res) => {
+router.post('/getuserbyemail2', (req, res) => {
     UserSchema.findAll({
       where: {
         email: req.body.email,
@@ -247,7 +247,7 @@ router.post('/getuserbyemail', (req, res) => {
             message: 'Not Found',
           });
         } else {
-          res.status(200).json(data);
+          res.status(200).json({status:200});
         }
         // });x
       })
@@ -285,20 +285,22 @@ router.post('/inserttoken', (req, res) => {
 });
 
 router.post('/updatepassword', (req, res) => {
-  const payload = {
-    password: req.body.password,
-  };
+   try {
+    bcrypt.hash(req.body.password, 10, async function (err, hash) {
+      const payload = {
+        password: hash,
+      };
+      UserSchema.update(payload, {
+        where: {
+          email: req.body.email,
+        },
+      })
+        .then(() => res.status(200).json({
+          status: 200,
+          messages: 'Password berhasil diupdate',
+        }));
+    });
 
-  try {
-    TokenSchemaStd.update(payload, {
-      where: {
-        email: req.body.email,
-      },
-    })
-      .then(() => res.status(200).json({
-        status: 200,
-        messages: 'Password berhasil diupdate',
-      }));
   } catch (e) {
     res.status(400).json({
       status: 'ERROR',
@@ -374,4 +376,26 @@ router.post('/getuserstdbytoken', (req, res) => {
     });
 });
 
+router.post('/aktivasiuser', (req, res) => {
+  try {
+     const payload = {
+        is_active: req.body.is_active,
+     };
+     UserSchema.update(payload, {
+       where: {
+         email: req.body.email,
+       },
+     })
+       .then(() => res.status(200).json({
+         status: 200,
+         messages: 'User berhasil diaktifkan',
+       }));
+ } catch (e) {
+   res.status(400).json({
+     status: 'ERROR',
+     messages: e,
+     data: {},
+   });
+ }
+});
 module.exports = router;
